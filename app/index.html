@@ -11,14 +11,11 @@
   -->
 
 </head>
-<body ng-controller="ColorPickerCtrl as colorPickerCtrl">
+<body>
 
 
   <color-picker-component></color-picker-component>
 
-  <color-picker ci-color-r="colorPickerCtrl.r" ci-color-g="colorPickerCtrl.g" ci-color-b="colorPickerCtrl.b"></color-picker>
-
-  <button ng-click="colorPickerCtrl.sayHello()">Click me!</button>
 
   <!-- 3rd-Party Libs -->
   <script src="bower_components/angular/angular.js"></script>
@@ -26,7 +23,7 @@
   <!-- Application Files -->
   <script src="scripts/app.js"></script>
   <script src="scripts/directives/colorPicker.js"></script>
-  <script src="scripts/controllers/ColorPickerCtrl.js"></script>
+  <script src="scripts/directives/colorPickerComponent.js"></script>
 
 </body>
 </html>
