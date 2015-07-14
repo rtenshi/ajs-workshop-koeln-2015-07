@@ -22,7 +22,7 @@
     <input type="text"
            name="isbn"
            ng-model="BookFormComponentCtrl.book.isbn"
-           placeholder="isbn" required valide-isbn>
+           placeholder="isbn" required validate-isbn>
 
     <span ng-show="BookFormComponentCtrl.bf.isbn.$invalid && BookFormComponentCtrl.bf.isbn.$dirty">
         Bitte tätigen Sie eine Eingabe.
@@ -37,10 +37,8 @@
         Bitte tätigen Sie eine Eingabe.
     </span><br>
 
-    
-
-
-    <button ng-click="BookFormComponentCtrl.storeBook(BookFormComponentCtrl.book)">
+    <button ng-click="BookFormComponentCtrl.storeBook(BookFormComponentCtrl.book)"
+            ng-disabled="BookFormComponentCtrl.bf.$invalid">
         Store Book
     </button>
 
