@@ -10,4 +10,5 @@
     ColorPickerCtrl.prototype.sayHello = function() {
         console.log('Hello', this.r, this.g, this.b);
     };
+
 })(angular.module('ciApp'));

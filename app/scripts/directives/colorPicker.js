@@ -12,6 +12,9 @@ angular.module('ciApp').directive('colorPicker', function() {
             g: '=ciColorG',
             b: '=ciColorB'
         },
+        controller: function() {
+            console.log('colorPicker Controller instance created!');
+        },
         link: function() {
             console.log('colorPicker instance created!');
         }
