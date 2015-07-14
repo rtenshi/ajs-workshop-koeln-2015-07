@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-xs-6">
+        <h1>Book List</h1>
+    </div>
+    <div class="col-xs-6">
+        <input type="text" ng-model="searchText">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Isbn</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="book in BookListComponentCtrl.books | filter: searchText">
+                    <td><a ng-href="#/books/{{ book.isbn }}">{{ book.title | uppercase }}</a></td>
+                    <td>{{ book.isbn }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

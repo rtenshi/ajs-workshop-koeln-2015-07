@@ -9,8 +9,15 @@
         };
     });
 
-    function BookDetailsComponentCtrl() {
+    function BookDetailsComponentCtrl($routeParams) {
+        console.log('BookDetailsComponentCtrl', $routeParams.isbn);
 
+        this.book = {
+            title: 'AngularJS for Beginners',
+            author: 'foo',
+            isbn: '123-456-789',
+            numPages: 123
+        };
     }
 
 })(angular.module('ciApp'));

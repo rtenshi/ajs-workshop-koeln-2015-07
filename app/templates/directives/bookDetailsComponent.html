@@ -1,1 +1,6 @@
-<h1>Book Details</h1>
+<h1 ng-bind="BookDetailsComponentCtrl.book.title"></h1>
+<ul>
+    <li ng-bind-template="Author: {{ BookDetailsComponentCtrl.book.author }}"></li>
+    <li ng-bind-template="#Pages: {{ BookDetailsComponentCtrl.book.numPages }}"></li>
+    <li ng-bind-template="ISBN: {{ BookDetailsComponentCtrl.book.isbn }}"></li>
+</ul>
