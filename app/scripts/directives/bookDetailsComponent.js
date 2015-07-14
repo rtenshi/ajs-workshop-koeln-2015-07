@@ -10,9 +10,10 @@
     });
 
     function BookDetailsComponentCtrl($routeParams, BookDataService) {
-        console.log('BookDetailsComponentCtrl', $routeParams.isbn);
-
-        this.book = BookDataService.getBookByIsbn($routeParams.isbn);
+        var self = this;
+        BookDataService.getBookByIsbn($routeParams.isbn).then(function(response) {
+            self.book = response.data;
+        });
     }
 
 })(angular.module('ciApp'));

@@ -34,7 +34,11 @@ describe('Service BookDataService', function() {
         });
 
         it('should return an array of book objects', function() {
-            var books = BookDataService.getAllBooks();
+            var books;
+            BookDataService.getAllBooks().then(function(response) {
+                books = response.data;
+            });
+            $rootScope.$apply();
             var isBookArray = books.every(function(b) {
                 return isValidBook(b);
             });
@@ -43,8 +47,17 @@ describe('Service BookDataService', function() {
         });
 
         it('should return a deep copy of the internal array', function() {
-            var books1 = BookDataService.getAllBooks(),
-                books2 = BookDataService.getAllBooks();
+            var books1;
+            BookDataService.getAllBooks().then(function(response) {
+                books1 = response.data;
+            });
+
+            var books2;
+            BookDataService.getAllBooks().then(function(response) {
+                books2 = response.data;
+            });
+
+            $rootScope.$apply();
 
             expect(books1).not.toBe(books2);
             books1.forEach(function(b, i) {

@@ -37,9 +37,9 @@
             });
 
             if (result.length === 0) {
-                throw new Error('isbn not found');
+                return $q.when({data: null});
             } else {
-                return angular.copy(result[0]);
+                return $q.when({data: angular.copy(result[0])});
             }
         };
     }
