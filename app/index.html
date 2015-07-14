@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="ciApp">
 <head>
   <meta charset="utf-8">
   <title>myApp</title>
@@ -11,15 +11,17 @@
   -->
 
 </head>
-<body>
+<body ng-controller="ColorPickerCtrl as colorPickerCtrl">
 
-  <h1>Hello World!</h1>
+  <color-picker ci-color-r="colorPickerCtrl.r" ci-color-g="colorPickerCtrl.g" ci-color-b="colorPickerCtrl.b"></color-picker>
 
   <!-- 3rd-Party Libs -->
   <script src="bower_components/angular/angular.js"></script>
 
   <!-- Application Files -->
-
+  <script src="scripts/app.js"></script>
+  <script src="scripts/directives/colorPicker.js"></script>
+  <script src="scripts/controllers/ColorPickerCtrl.js"></script>
 
 </body>
 </html>
