@@ -2,12 +2,16 @@
 
 describe('Service BookDataService', function() {
 
-    var BookDataService;
+    var $rootScope;
+    var BookDataService, isValidBook;
 
     beforeEach(module('ciApp'));
+    beforeEach(module('testCommons'));
 
-    beforeEach(inject(function(_BookDataService_) {
+    beforeEach(inject(function(_BookDataService_, _isValidBook_, _$rootScope_) {
         BookDataService = _BookDataService_;
+        isValidBook = _isValidBook_;
+        $rootScope = _$rootScope_;
     }));
 
     it('should be defined', function() {
@@ -21,7 +25,11 @@ describe('Service BookDataService', function() {
         });
 
         it('should return an array', function() {
-            var books = BookDataService.getAllBooks();
+            var books;
+            BookDataService.getAllBooks().then(function(response) {
+                books = response.data;
+            });
+            $rootScope.$apply();
             expect(angular.isArray(books)).toBe(true);
         });
 
@@ -44,14 +52,5 @@ describe('Service BookDataService', function() {
             });
         });
     });
-
-
-    function isValidBook(b) {
-        return angular.isDefined(b)
-                && angular.isString(b.title)
-                && angular.isString(b.author)
-                && angular.isString(b.isbn)
-                && angular.isNumber(b.numPages);
-    }
 
 });

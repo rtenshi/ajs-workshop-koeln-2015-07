@@ -10,7 +10,10 @@
     });
 
     function BookListComponentCtrl(BookDataService) {
-        this.books = BookDataService.getAllBooks();
+        var self = this;
+        BookDataService.getAllBooks().then(function(response) {
+            self.books = response.data;
+        });
     }
 
 })(angular.module('ciApp'));

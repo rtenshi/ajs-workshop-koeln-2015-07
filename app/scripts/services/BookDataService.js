@@ -1,6 +1,7 @@
-angular.module('ciApp').factory('BookDataService', function() {
+(function(module) {
 
-    // private state
+    module.service('BookDataService', BookDataService);
+
     var books = [
         {
             title: 'AngularJS for Beginners',
@@ -22,13 +23,25 @@ angular.module('ciApp').factory('BookDataService', function() {
         }
     ];
 
-    // private impl.
-    function getAllBooks() {
-        return angular.copy(books);
+
+    function BookDataService($q) {
+        this.getAllBooks = function() {
+            return $q.when({
+                data: angular.copy(books)
+            });
+        };
+
+        this.getBookByIsbn = function(isbn) {
+            var result = books.filter(function(b) {
+                return isbn === b.isbn;
+            });
+
+            if (result.length === 0) {
+                throw new Error('isbn not found');
+            } else {
+                return angular.copy(result[0]);
+            }
+        };
     }
 
-    // revealing module
-    return {
-        getAllBooks: getAllBooks
-    };
-});
+})(angular.module('ciApp'));
