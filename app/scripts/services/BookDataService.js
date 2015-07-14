@@ -42,6 +42,11 @@
                 return $q.when({data: angular.copy(result[0])});
             }
         };
+
+        this.storeBook = function(book) {
+            books.push(book);
+            return $q.when({data: true});
+        };
     }
 
 })(angular.module('ciApp'));

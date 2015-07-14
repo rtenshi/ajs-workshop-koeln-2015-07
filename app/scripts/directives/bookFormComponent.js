@@ -9,12 +9,18 @@
         };
     });
 
-    function BookFormComponentCtrl(BookDataService) {
-
+    function BookFormComponentCtrl($location, BookDataService) {
+        this.$location = $location;
+        this.BookDataService = BookDataService;
     }
 
     BookFormComponentCtrl.prototype.storeBook = function(book) {
-        console.log('storeBook', book);
+        var self = this;
+        this.BookDataService.storeBook(book).then(function(response) {
+            if (response.data) {
+                self.$location.path('/books');
+            }
+        });
     };
 
 })(angular.module('ciApp'));
