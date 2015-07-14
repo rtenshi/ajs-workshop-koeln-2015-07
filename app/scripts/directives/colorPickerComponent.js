@@ -3,7 +3,7 @@
     module.directive('colorPickerComponent', function() {
 
         return {
-            restrict: 'E',
+            restrict: 'E', // E = element (tag)
             templateUrl: 'templates/directives/colorPickerComponent.html',
             scope: {},
             controller: ColorPickerComponentCtrl,

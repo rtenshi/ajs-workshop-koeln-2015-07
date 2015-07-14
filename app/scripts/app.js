@@ -1,3 +1,3 @@
 "use strict";
 
-angular.module('ciApp', []);
+angular.module('ciApp', ['ngRoute']);

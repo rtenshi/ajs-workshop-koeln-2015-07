@@ -13,17 +13,22 @@
 </head>
 <body>
 
-
-  <color-picker-component></color-picker-component>
+  <div class="container" ng-view>
+  </div>
 
 
   <!-- 3rd-Party Libs -->
   <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
 
   <!-- Application Files -->
   <script src="scripts/app.js"></script>
   <script src="scripts/directives/colorPicker.js"></script>
   <script src="scripts/directives/colorPickerComponent.js"></script>
+  <script src="scripts/directives/bookDetailsComponent.js"></script>
+  <script src="scripts/controllers/MainCtrl.js"></script>
+  <script src="scripts/_configs/routeConfig.js"></script>
+  <script src="scripts/_runs/ciAppRun.js"></script>
 
 </body>
 </html>
