@@ -47,6 +47,24 @@
             books.push(book);
             return $q.when({data: true});
         };
+
+        this.deleteBookByIsbn = function(isbn) {
+            var indexToDelete = -1;
+            var i = books.length;
+            while(i--) {
+                if (isbn === books[i].isbn) {
+                    indexToDelete = i;
+                    break;
+                }
+            }
+
+            if (indexToDelete !== -1) {
+                books.splice(indexToDelete, 1);
+                return $q.when({data: true});
+            } else {
+                return $q.when({data: false});
+            }
+        };
     }
 
 })(angular.module('ciApp'));

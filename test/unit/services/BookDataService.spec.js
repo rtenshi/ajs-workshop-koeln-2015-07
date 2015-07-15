@@ -66,4 +66,33 @@ describe('Service BookDataService', function() {
         });
     });
 
+    describe('deleteBookByIsbn()', function() {
+        it('should properly delete a book object', function() {
+            var numBooksBefore = getNumberOfBooks();
+
+            var deleted = false;
+            var isbn = '123-456-789';
+            BookDataService.deleteBookByIsbn(isbn).then(function(response) {
+                deleted = response.data;
+            });
+
+            $rootScope.$apply();
+
+            var numBooksAfter = getNumberOfBooks();
+            expect(deleted).toBe(true);
+            expect(numBooksAfter).toBe(numBooksBefore - 1);
+        });
+    });
+
+    function getNumberOfBooks() {
+        var num;
+
+        BookDataService.getAllBooks().then(function(response) {
+            num = response.data.length;
+        });
+        $rootScope.$apply();
+
+        return num;
+    }
+
 });
