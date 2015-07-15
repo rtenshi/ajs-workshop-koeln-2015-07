@@ -18,6 +18,20 @@
 
     BookListComponentCtrl.prototype.deleteBook = function(book) {
         console.log('delete book', book);
+        this.dialogVisible = true;
+        this.dialogTitle = 'Wirklich löschen?';
+        this.bookToDelete = book;
+    };
+
+    BookListComponentCtrl.prototype.performDeletion = function() {
+        console.log('perform deletion', this.bookToDelete);
+    };
+
+    BookListComponentCtrl.prototype.cancelDeletion = function() {
+        console.log('cancel deletion');
+        delete this.dialogVisible;
+        delete this.dialogTitle;
+        delete this.bookToDelete;
     };
 
 })(angular.module('ciApp'));
