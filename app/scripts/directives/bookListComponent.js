@@ -16,4 +16,8 @@
         });
     }
 
+    BookListComponentCtrl.prototype.deleteBook = function(book) {
+        console.log('delete book', book);
+    };
+
 })(angular.module('ciApp'));
