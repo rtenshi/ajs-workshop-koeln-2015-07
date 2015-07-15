@@ -3,23 +3,18 @@
 describe('Directive messageDialog', function() {
 
     var $compile, $rootScope;
-    var directiveHelper, getDirectiveScope;
-
-    var usageTemplate = '<message-dialog visible="BookListComponentCtrl.dialogVisible" \
-                            title="BookListComponentCtrl.dialogTitle" \
-                            on-yes="BookListComponentCtrl.performDeletion()" \
-                            on-no="BookListComponentCtrl.cancelDeletion()"> \
-                            Soll das Buch <em>{{ BookListComponentCtrl.bookToDelete.title }}</em> wirklich gelöscht werden? \
-                         </message-dialog>';
+    var directiveHelper, getDirectiveScope, usageTemplate;
 
     beforeEach(module('ciApp'));
     beforeEach(module('testCommons'));
+    beforeEach(module('testData'));
 
-    beforeEach(inject(function(_directiveHelper_, _getDirectiveScope_, _$compile_, _$rootScope_) {
+    beforeEach(inject(function(_messageDialogTemplateString_, _directiveHelper_, _getDirectiveScope_, _$compile_, _$rootScope_) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         directiveHelper = _directiveHelper_;
         getDirectiveScope = _getDirectiveScope_;
+        usageTemplate = _messageDialogTemplateString_;
     }));
 
     it('should properly set the title', function() {
