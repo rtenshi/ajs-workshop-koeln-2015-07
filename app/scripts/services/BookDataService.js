@@ -1,25 +1,37 @@
 (function(module) {
 
-    module.service('BookDataService', BookDataService);
+    module.provider('BookDataService', function() {
 
-    function BookDataService($http) {
-        var baseUrl = 'http://ajs-workshop.herokuapp.com/api';
+        var _baseUrl = 'http://localhost:8080';
 
-        this.getAllBooks = function() {
-            return $http.get(baseUrl + '/books');
+        this.setBaseUrl = function(baseUrl) {
+            _baseUrl = baseUrl;
         };
 
-        this.getBookByIsbn = function(isbn) {
-            return $http.get(baseUrl + '/books/' + isbn);
+        this.$get = function($http) {
+            return new BookDataService($http, _baseUrl);
         };
+    });
 
-        this.storeBook = function(book) {
-            return $http.post(baseUrl + '/books', book);
-        };
-
-        this.deleteBookByIsbn = function(isbn) {
-            return $http.delete(baseUrl + '/books/' + isbn);
-        };
+    function BookDataService($http, baseUrl) {
+        this.$http = $http;
+        this.baseUrl = baseUrl;
     }
+
+    BookDataService.prototype.getAllBooks = function() {
+        return this.$http.get(this.baseUrl + '/books');
+    };
+
+    BookDataService.prototype.getBookByIsbn = function(isbn) {
+        return this.$http.get(this.baseUrl + '/books/' + isbn);
+    };
+
+    BookDataService.prototype.storeBook = function(book) {
+        return this.$http.post(this.baseUrl + '/books', book);
+    };
+
+    BookDataService.prototype.deleteBookByIsbn = function(isbn) {
+        return this.$http.delete(this.baseUrl + '/books/' + isbn);
+    };
 
 })(angular.module('ciApp'));

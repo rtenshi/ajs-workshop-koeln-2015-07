@@ -1,13 +1,15 @@
 "use strict";
 
 describe('Service BookDataService', function() {
-
-    var baseUrl = 'http://ajs-workshop.herokuapp.com/api';
+    var baseUrl = 'http://mydomain.com';
     var $rootScope, $httpBackend;
     var BookDataService, isValidBook;
 
     beforeEach(module('ciApp'));
     beforeEach(module('testCommons'));
+    beforeEach(module(function(BookDataServiceProvider) {
+        BookDataServiceProvider.setBaseUrl(baseUrl);
+    }));
 
     beforeEach(inject(function(_BookDataService_, _isValidBook_, _$rootScope_, _$httpBackend_) {
         BookDataService = _BookDataService_;
@@ -18,6 +20,7 @@ describe('Service BookDataService', function() {
 
     beforeEach(function() {
         $httpBackend.when('GET', baseUrl + '/books').respond([]);
+        $httpBackend.when('DELETE', baseUrl + '/books/123-456-789').respond(true);
     });
 
     afterEach(function() {
@@ -35,7 +38,7 @@ describe('Service BookDataService', function() {
             expect(angular.isFunction(BookDataService.getAllBooks)).toBe(true);
         });
 
-        fit('should make the corresponding http request', function() {
+        it('should make the corresponding http request', function() {
             $httpBackend.expectGET(baseUrl + '/books');
             BookDataService.getAllBooks();
             $httpBackend.flush(1);
@@ -44,19 +47,10 @@ describe('Service BookDataService', function() {
 
     describe('deleteBookByIsbn()', function() {
         it('should properly delete a book object', function() {
-            var numBooksBefore = getNumberOfBooks();
-
-            var deleted = false;
             var isbn = '123-456-789';
-            BookDataService.deleteBookByIsbn(isbn).then(function(response) {
-                deleted = response.data;
-            });
-
-            $rootScope.$apply();
-
-            var numBooksAfter = getNumberOfBooks();
-            expect(deleted).toBe(true);
-            expect(numBooksAfter).toBe(numBooksBefore - 1);
+            $httpBackend.expectDELETE(baseUrl + '/books/' + isbn);
+            BookDataService.deleteBookByIsbn(isbn);
+            $httpBackend.flush(1);
         });
     });
 
