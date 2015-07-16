@@ -16,12 +16,19 @@
 
         function prepareDirective(parentScopeManipulationFn, usageTemplate) {
             var parentScope = $rootScope.$new();
-            parentScopeManipulationFn(parentScope);
+
+            if (parentScopeManipulationFn) {
+                parentScopeManipulationFn(parentScope);
+            }
+
             var scopeLinkingFn = $compile(usageTemplate);
             var jqElem = scopeLinkingFn(parentScope);
             parentScope.$apply();
 
-            return jqElem;
+            return {
+                jqElem: jqElem,
+                parentScope: parentScope
+            };
         }
 
         return {

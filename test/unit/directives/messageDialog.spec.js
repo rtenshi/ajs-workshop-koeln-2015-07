@@ -24,7 +24,7 @@ describe('Directive messageDialog', function() {
 
         var jqElem = directiveHelper.prepareDirective(function(parentScope) {
             parentScope.BookListComponentCtrl = BookListComponentCtrl;
-        }, usageTemplate);
+        }, usageTemplate).jqElem;
 
         expect(jqElem.find('div.title').text()).toBe(BookListComponentCtrl.dialogTitle.toUpperCase());
     });
@@ -38,7 +38,7 @@ describe('Directive messageDialog', function() {
 
         var jqElem = directiveHelper.prepareDirective(function(parentScope) {
             parentScope.BookListComponentCtrl = BookListComponentCtrl;
-        }, usageTemplate);
+        }, usageTemplate).jqElem;
 
         expect(jqElem.find('div.content').text()).toContain(BookListComponentCtrl.bookToDelete.title);
     });
@@ -52,7 +52,7 @@ describe('Directive messageDialog', function() {
 
         var jqElem = directiveHelper.prepareDirective(function(parentScope) {
             parentScope.BookListComponentCtrl = BookListComponentCtrl;
-        }, usageTemplate);
+        }, usageTemplate).jqElem;
 
         var directiveScope = getDirectiveScope(jqElem);
         directiveScope.MessageDialogCtrl.onYes();
@@ -69,7 +69,7 @@ describe('Directive messageDialog', function() {
 
         var jqElem = directiveHelper.prepareDirective(function(parentScope) {
             parentScope.BookListComponentCtrl = BookListComponentCtrl;
-        }, usageTemplate);
+        }, usageTemplate).jqElem;
 
         var directiveScope = getDirectiveScope(jqElem);
         directiveScope.MessageDialogCtrl.onNo();
@@ -78,11 +78,19 @@ describe('Directive messageDialog', function() {
     });
 
     it('should get an own scope', function() {
-
+        var preparation = directiveHelper.prepareDirective(null, usageTemplate);
+        var directiveScope = getDirectiveScope(preparation.jqElem);
+        expect(preparation.parentScope.$id).not.toBe(directiveScope.$id);
     });
 
     it('should get an isolated scope', function() {
+        var test = 'test';
 
+        var preparation = directiveHelper.prepareDirective(function(parentScope) {
+            parentScope.test = test;
+        }, usageTemplate);
+        var directiveScope = getDirectiveScope(preparation.jqElem);
+        expect(directiveScope.test).toBeUndefined();
     });
 
 });
