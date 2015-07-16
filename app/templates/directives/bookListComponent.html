@@ -20,7 +20,7 @@
 
             <tbody>
                 <tr ng-repeat="book in BookListComponentCtrl.books | filter: searchText">
-                    <td><a ng-href="#/books/{{ book.isbn }}">{{ book.title | uppercase }}</a></td>
+                    <td><a ng-href="#/books/{{ book.isbn }}">{{ book.title | uppercase | truncate:7:'...' }}</a></td>
                     <td>{{ book.isbn }}</td>
                     <td><button ng-click="BookListComponentCtrl.deleteBook(book)">Delete</button></td>
                 </tr>

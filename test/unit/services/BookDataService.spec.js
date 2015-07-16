@@ -15,8 +15,6 @@ describe('Service BookDataService', function() {
     beforeEach(module(function($provide, BookDataServiceProvider, MockDataEnhancerProvider) {
         BookDataServiceProvider.setBaseUrl(baseUrl);
 
-        registerMockDataEnhancer($provide);
-
         $provide.factory('DataEnhancer', function() {
             return MockDataEnhancerProvider.getMockDataEnhancer()
         });
