@@ -5,10 +5,22 @@ describe('Service BookDataService', function() {
     var $rootScope, $httpBackend;
     var BookDataService, isValidBook;
 
+    var mockedBooks = [
+        {title: 'test'}
+    ];
+
     beforeEach(module('ciApp'));
     beforeEach(module('testCommons'));
-    beforeEach(module(function(BookDataServiceProvider) {
+    beforeEach(module(function($provide, BookDataServiceProvider) {
         BookDataServiceProvider.setBaseUrl(baseUrl);
+
+        $provide.factory('DataEnhancer', function() {
+            return {
+                enhance: function(s) {
+                    return s;
+                }
+            };
+        });
     }));
 
     beforeEach(inject(function(_BookDataService_, _isValidBook_, _$rootScope_, _$httpBackend_) {
@@ -19,7 +31,7 @@ describe('Service BookDataService', function() {
     }));
 
     beforeEach(function() {
-        $httpBackend.when('GET', baseUrl + '/books').respond([]);
+        $httpBackend.when('GET', baseUrl + '/books').respond(mockedBooks);
         $httpBackend.when('DELETE', baseUrl + '/books/123-456-789').respond(true);
     });
 
@@ -40,7 +52,9 @@ describe('Service BookDataService', function() {
 
         it('should make the corresponding http request', function() {
             $httpBackend.expectGET(baseUrl + '/books');
-            BookDataService.getAllBooks();
+            BookDataService.getAllBooks().then(function(response) {
+                console.log('returned books', response.data);
+            });
             $httpBackend.flush(1);
         });
     });

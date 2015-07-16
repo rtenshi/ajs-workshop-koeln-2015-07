@@ -8,18 +8,29 @@
             _baseUrl = baseUrl;
         };
 
-        this.$get = function($http) {
-            return new BookDataService($http, _baseUrl);
+        this.$get = function($http, DataEnhancer) {
+            return new BookDataService($http, DataEnhancer, _baseUrl);
         };
     });
 
-    function BookDataService($http, baseUrl) {
+    function BookDataService($http, DataEnhancer, baseUrl) {
         this.$http = $http;
+        this.DataEnhancer = DataEnhancer;
         this.baseUrl = baseUrl;
     }
 
     BookDataService.prototype.getAllBooks = function() {
-        return this.$http.get(this.baseUrl + '/books');
+        var self = this;
+
+        return this.$http.get(this.baseUrl + '/books').then(function(response) {
+            if (angular.isArray(response.data)) {
+                response.data.forEach(function(b) {
+                    b.title = self.DataEnhancer.enhance(b.title);
+                });
+            }
+
+            return response;
+        });
     };
 
     BookDataService.prototype.getBookByIsbn = function(isbn) {
