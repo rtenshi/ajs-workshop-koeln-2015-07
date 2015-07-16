@@ -34,4 +34,8 @@
         return this.$http.delete(this.baseUrl + '/books/' + isbn);
     };
 
+    BookDataService.prototype.updateBook = function(book) {
+        return this.$http.put(this.baseUrl + '/books/' + book.isbn, book);
+    };
+
 })(angular.module('ciApp'));
