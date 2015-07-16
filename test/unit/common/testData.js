@@ -8,8 +8,7 @@
      </message-dialog>');
 
 
-
-    var books = [
+    module.constant('mockedBooks', [
         {
             title: 'AngularJS for Beginners',
             author: 'foo',
@@ -28,6 +27,6 @@
             isbn: '222-222-222',
             numPages: 100
         }
-    ];
+    ]);
 
 })(angular.module('testData', []));

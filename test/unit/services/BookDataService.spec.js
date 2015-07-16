@@ -3,31 +3,31 @@
 describe('Service BookDataService', function() {
     var baseUrl = 'http://mydomain.com';
     var $rootScope, $httpBackend;
+    var mockedBooks;
     var BookDataService, isValidBook;
 
-    var mockedBooks = [
-        {title: 'test'}
-    ];
+
 
     beforeEach(module('ciApp'));
     beforeEach(module('testCommons'));
-    beforeEach(module(function($provide, BookDataServiceProvider) {
+    beforeEach(module('testData'));
+    beforeEach(module('testMocks'));
+    beforeEach(module(function($provide, BookDataServiceProvider, MockDataEnhancerProvider) {
         BookDataServiceProvider.setBaseUrl(baseUrl);
 
+        registerMockDataEnhancer($provide);
+
         $provide.factory('DataEnhancer', function() {
-            return {
-                enhance: function(s) {
-                    return s;
-                }
-            };
+            return MockDataEnhancerProvider.getMockDataEnhancer()
         });
     }));
 
-    beforeEach(inject(function(_BookDataService_, _isValidBook_, _$rootScope_, _$httpBackend_) {
-        BookDataService = _BookDataService_;
-        isValidBook = _isValidBook_;
+    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _BookDataService_, _isValidBook_, _mockedBooks_) {
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
+        BookDataService = _BookDataService_;
+        isValidBook = _isValidBook_;
+        mockedBooks = _mockedBooks_;
     }));
 
     beforeEach(function() {

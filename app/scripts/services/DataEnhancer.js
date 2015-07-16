@@ -1,6 +1,6 @@
 angular.module('ciApp').factory('DataEnhancer', function() {
     function enhance(s) {
-        return s + ' ### PWNED!';
+        return s;
     }
 
     return {
