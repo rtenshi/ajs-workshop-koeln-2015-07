@@ -77,4 +77,12 @@ describe('Directive messageDialog', function() {
         expect(BookListComponentCtrl.cancelDeletion).toHaveBeenCalled();
     });
 
+    it('should get an own scope', function() {
+
+    });
+
+    it('should get an isolated scope', function() {
+
+    });
+
 });
