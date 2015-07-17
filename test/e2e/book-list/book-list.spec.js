@@ -1,41 +1,49 @@
 "use strict";
 
+var BookListView = require('../page-objects/book-list');
 
 describe('Book list view', function() {
+    var bookListView;
 
     beforeEach(function() {
-        browser.get('http://localhost:8080/#/books');
+        bookListView = new BookListView();
+        bookListView.open();
     });
 
     it('should be properly loaded', function() {
-        expect(element(by.css('h1')).getText()).toBe('Book List');
+        expect(bookListView.getHeading()).toBe('Book List');
     });
 
     it('should contain 3 books', function() {
-        var bookCount = element.all(by.repeater('book in BookListComponentCtrl.books')).count();
+        var bookCount = bookListView.getBookCount();
         expect(bookCount).toBe(3);
     });
 
     it('should properly filter the list', function() {
-        var bookList = element.all(by.repeater('book in BookListComponentCtrl.books'));
-        expect(bookList.count()).toBe(3);
+        expect(bookListView.getBookCount()).toBe(3);
 
-        var searchTextInput = element(by.model('searchText'));
-        searchTextInput.sendKeys('coffeescript');
+        bookListView.search('coffeescript');
 
-        expect(bookList.count()).toBe(1);
-        expect(bookList.get(0).element(by.binding('book.isbn')).getText()).toBe('978-3-86490-050-1');
+        expect(bookListView.getBookCount()).toBe(1);
+        expect(bookListView.getIsbnByIndex(0)).toBe('978-3-86490-050-1');
     });
 
     it('should properly open the deletion dialog', function() {
-        var messageDialogParentDiv = element(by.css('message-dialog > div'));
-        expect(messageDialogParentDiv.getCssValue('display')).toBe('none');
+        expect(bookListView.isMessageDialogVisible()).toBe(false);
 
-        var bookList = element.all(by.repeater('book in BookListComponentCtrl.books'));
-        var deleteBtn = bookList.get(0).element(by.css('button'));
-        deleteBtn.click();
+        bookListView.clickOnDeleteButton(0);
 
-        expect(messageDialogParentDiv.getCssValue('display')).toBe('block');
+        expect(bookListView.isMessageDialogVisible()).toBe(true);
+    });
+
+    iit('should properly create and delete books', function() {
+        bookListView.openBookForm();
+        bookListView.setBookFormTitle('phils buch');
+        bookListView.setBookFormAuthor('phil');
+        bookListView.setBookFormIsbn('0000000000');
+        bookListView.setBookFormNumPages('5');
+        bookListView.clickOnCreateButton();
+        expect(browser.getLocationAbsUrl()).toBe('http://localhost:8080/#/books');
     });
 
 });
