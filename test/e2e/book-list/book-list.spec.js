@@ -1,6 +1,7 @@
 "use strict";
 
-var BookListView = require('../page-objects/book-list');
+var BookListView = require('../page-objects/book-list'),
+    NewBookFormView = require('../page-objects/new-book-form');
 
 describe('Book list view', function() {
     var bookListView;
@@ -37,13 +38,27 @@ describe('Book list view', function() {
     });
 
     iit('should properly create and delete books', function() {
-        bookListView.openBookForm();
-        bookListView.setBookFormTitle('phils buch');
-        bookListView.setBookFormAuthor('phil');
-        bookListView.setBookFormIsbn('0000000000');
-        bookListView.setBookFormNumPages('5');
-        bookListView.clickOnCreateButton();
-        expect(browser.getLocationAbsUrl()).toBe('http://localhost:8080/#/books');
+        var newBookFormView = new NewBookFormView();
+        var bookTitle = 'phils buch';
+        var bookIsbn = '0000000000';
+
+        newBookFormView.open();
+        newBookFormView.setBookFormTitle(bookTitle);
+        newBookFormView.setBookFormAuthor('phil');
+        newBookFormView.setBookFormIsbn(bookIsbn);
+        newBookFormView.setBookFormNumPages('5');
+        newBookFormView.clickOnCreateButton();
+
+        expect(browser.getLocationAbsUrl()).toBe('/books');
+
+        bookListView.search(bookTitle);
+        expect(bookListView.getIsbnByIndex(0)).toBe(bookIsbn);
+        expect(bookListView.getBookCount()).toBe(1);
+
+        bookListView.clickOnDeleteButton(0);
+        bookListView.performDeletion();
+
+        expect(bookListView.getBookCount()).toBe(0);
     });
 
 });

@@ -14,6 +14,7 @@
         angular.extend(this, bookFormCtrlInstance);
 
         var self = this;
+        this.$scope = $scope;
         this.BookDataService.getBookByIsbn($routeParams.isbn).then(function(response) {
             self.book = response.data;
         });
@@ -28,6 +29,10 @@
         this.primaryAction = function(book) {
             self.BookDataService.updateBook(book).then(function(response) {
                 if (response.data) {
+                    self.$scope.$emit('customEvent', {
+                        foo: 'bar',
+                        baz: 'bat'
+                    });
                     self.$location.path('/books');
                 }
             });
